@@ -1,0 +1,82 @@
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven {
+            url 'https://jitpack.io'
+        }
+    }
+
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.2'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'com.github.johnrengelman.shadow'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven {
+        url 'https://jitpack.io'
+    }
+    maven {
+        name 'velocity'
+        url 'https://repo.velocitypowered.com/snapshots/'
+    }
+    maven {
+        name = 'sponge'
+        url = 'https://repo.spongepowered.org/maven'
+    }
+
+}
+
+dependencies {
+    //testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile 'com.velocitypowered:velocity-api:1.0-SNAPSHOT'
+    compile "org.spongepowered:configurate-hocon:3.6"
+
+    //Jda
+    compile 'org.apache.commons:commons-collections4:4.1'
+    compile 'org.json:json:20160810'
+    compile 'net.sf.trove4j:trove4j:3.0.3'
+    compile 'com.squareup.okio:okio:1.15.0'
+    compile 'com.neovisionaries:nv-websocket-client:2.4'
+    compile 'com.squareup.okhttp3:okhttp:3.8.1'
+    compile ('net.dv8tion:JDA:3.7.1_395') {
+        exclude module: 'opus-java'
+    }
+}
+
+shadowJar {
+    baseName = 'BetterDiscordBridge'
+    classifier = null
+    version = '1.0.0'
+    dependencies {
+        include dependency("org.spongepowered:configurate-hocon")
+        include dependency("org.spongepowered:configurate-core")
+        include dependency("com.typesafe:config")
+        include dependency("net.dv8tion:JDA")
+        include dependency("com.vdurmont:emoji-java")
+        include dependency("com.neovisionaries:nv-websocket-client")
+        include dependency("com.squareup.okhttp3:okhttp")
+        include dependency("com.squareup.okio:okio")
+        include dependency("org.apache.commons:commons-collections4")
+        include dependency("org.json:json")
+        include dependency("net.sf.trove4j:trove4j")
+        relocate "net.dv8tion", "JDA"
+        relocate "com.neovisionaries", "dep1"
+        relocate "okhttp3", "dep2"
+        relocate "okio", "dep6"
+        relocate "org.apache.commons", "dep3"
+        relocate "org.json", "dep4"
+        relocate "net.sf.trove4j", "dep5"
+    }
+
+}
+
+
