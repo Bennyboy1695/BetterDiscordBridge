@@ -6,12 +6,14 @@ import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
+import io.github.bennyboy1695.betterdiscordbridge.Commands.CommandGameStatus;
 import io.github.bennyboy1695.betterdiscordbridge.Listeners.DiscordListener;
 import io.github.bennyboy1695.betterdiscordbridge.Listeners.VelocityEventListener;
 import io.github.bennyboy1695.betterdiscordbridge.Utils.DiscordMethods;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
+import net.dv8tion.jda.core.entities.Game;
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
 
@@ -23,7 +25,7 @@ import java.util.logging.Logger;
 public final class BetterDiscordBridge {
 
 
-    static final String VERSION = "1.0.0";
+    static final String VERSION = "1.1.0";
 
     private final ProxyServer proxyServer;
     private final Logger logger;
@@ -52,7 +54,12 @@ public final class BetterDiscordBridge {
             e.printStackTrace();
         }
 
+        if (getConfig().getUseStatus()) {
+            updateGameStatus(getConfig().getGameStatus());
+        }
+
         proxyServer.getEventManager().register(this, new VelocityEventListener(this));
+        proxyServer.getCommandManager().register(new CommandGameStatus(this), "gamestatus", "gs");
     }
 
     private void loadDiscord() {
@@ -70,6 +77,10 @@ public final class BetterDiscordBridge {
 
     public ProxyServer getProxyServer() {
         return proxyServer;
+    }
+
+    public Logger getLogger() {
+        return logger;
     }
 
     private void setupDiscord(String token, long guildID, Object eventListener) {
@@ -106,6 +117,19 @@ public final class BetterDiscordBridge {
             setupDiscord(getConfig().getDiscordToken(), getConfig().getGuildID(), new DiscordListener(this));
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public void updateGameStatus(String status) {
+        if (status.startsWith("Playing") || status.startsWith("playing")) {
+            getJDA().getPresence().setGame(Game.playing(status.replace("playing", "").replace("Playing", "")));
+            getLogger().info("Set bots status to: " + status);
+        } else if (status.startsWith("Watching") || status.startsWith("watching")) {
+            getJDA().getPresence().setGame(Game.watching(status.replace("watching", "").replace("Watching", "")));
+            getLogger().info("Set bots status to: " + status);
+        } else if (status.startsWith("Listening") || status.startsWith("listening")) {
+            getJDA().getPresence().setGame(Game.listening(status.replace("listening", "").replace("Listening", "")));
+            getLogger().info("Set bots status to: " + status);
         }
     }
 }

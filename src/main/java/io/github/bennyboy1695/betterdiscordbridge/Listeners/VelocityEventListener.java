@@ -15,8 +15,10 @@ public class VelocityEventListener {
     @Subscribe
     public void onChat(PlayerChatEvent event) {
         String serverName = event.getPlayer().getCurrentServer().get().getServerInfo().getName();
-        if (instance.getConfig().getChatMode().equals("global")) {
+        if (!instance.getConfig().getChatMode().equals("separated")) {
             instance.getDiscordMethods().sendMessage(instance.getConfig().getChannels("global"), instance.getConfig().getFormats("discord_to").replace("<Server>", serverName).replace("<Message>", event.getMessage()));
+        } else {
+           instance.getDiscordMethods().sendMessage(instance.getConfig().getChannels(serverName), instance.getConfig().getFormats("discord_to").replace("<Server>", serverName).replace("<Message>", event.getMessage()));
         }
     }
 }

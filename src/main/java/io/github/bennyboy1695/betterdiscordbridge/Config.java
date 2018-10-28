@@ -1,6 +1,7 @@
 package io.github.bennyboy1695.betterdiscordbridge;
 
 import com.velocitypowered.api.proxy.ProxyServer;
+import com.velocitypowered.api.proxy.server.RegisteredServer;
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import ninja.leaping.configurate.hocon.HoconConfigurationLoader;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
@@ -52,6 +53,10 @@ public class Config {
         save(defaultConf);
     }
 
+    public CommentedConfigurationNode getConfigNode() {
+        return configNode;
+    }
+
     public void saveConfig() {
         try {
             configManager.save(configNode);
@@ -75,16 +80,22 @@ public class Config {
         if (configNode.getNode("discord", "info", "mode").isVirtual()) {
             configNode.getNode("discord", "info", "mode").setValue("global").setComment("This decides whether the plugin sends chat to one channel, or one for each server connected to velocity! Options are: 'global' or 'separated'");
         }
+        if (configNode.getNode("discord", "info", "status").isVirtual()) {
+            configNode.getNode("discord", "info", "status").setValue("Playing on A Velocity Server!").setComment("This will set what the bot is playing/listening to! Currently requires a restart of the proxy to use the config to change it, but there's a command to do it too!");
+        }
+        if (configNode.getNode("discord", "info", "useConfigStatus").isVirtual()) {
+            configNode.getNode("discord", "info", "useConfigStatus").setValue(true).setComment("If this is set to true, everytime the Velocity server starts the bots status will be set from whats written in the config!");
+        }
 
         //Channels
         if (configNode.getNode("discord", "channels", "global").isVirtual()) {
             configNode.getNode("discord", "channels", "global").setValue(0L).setComment("This is the channel id of the discord channel you would like chat to go to. This is only used if mode is set to global!");
         }
-        //for (RegisteredServer registeredServer : proxyServer.getAllServers()) {
-        //    if (configNode.getNode("discord", "channels", registeredServer.getServerInfo().getName()).isVirtual()) {
-        //        configNode.getNode("discord", "channels", registeredServer.getServerInfo().getName()).setValue(0L).setComment("This is where you put the id of the discord channel you would like to link to " + registeredServer.getServerInfo().getName() + " . This channel will only be used if mode is set to separated and if the server still exists in velocity!");
-        //    }
-        //}
+        for (RegisteredServer registeredServer : proxyServer.getAllServers()) {
+            if (configNode.getNode("discord", "channels", registeredServer.getServerInfo().getName()).isVirtual()) {
+                configNode.getNode("discord", "channels", registeredServer.getServerInfo().getName()).setValue(0L).setComment("This is where you put the id of the discord channel you would like to link to " + registeredServer.getServerInfo().getName() + " . This channel will only be used if mode is set to separated and if the server still exists in velocity!");
+            }
+        }
 
         //Formats
         if (configNode.getNode("format", "discord", "to").isVirtual()) {
@@ -125,12 +136,32 @@ public class Config {
         return mode;
     }
 
-    public long getChannels(String type) {
+    public String getGameStatus() {
+        String status = "";
+        try {
+            status = configNode.getNode("discord", "info", "status").getString();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        return status;
+    }
+
+    public Boolean getUseStatus() {
+        Boolean status = null;
+        try {
+            status = configNode.getNode("discord", "info", "useConfigStatus").getBoolean();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        return status;
+    }
+
+    public long getChannels(String channel) {
         long id = 0L;
-        switch (type) {
-            case "global":
-               id = configNode.getNode("discord", "channels", "global").getLong();
-               break;
+        if (channel.toLowerCase().equals("global")) {
+            id = configNode.getNode("discord", "channels", "global").getLong();
+        } else {
+            id = configNode.getNode("discord", "channels", channel).getLong();
         }
         return id;
     }
