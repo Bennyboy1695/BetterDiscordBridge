@@ -19,11 +19,11 @@ import javax.security.auth.login.LoginException;
 import java.nio.file.Path;
 import java.util.logging.Logger;
 
-@Plugin(id = "betterdiscordbridge", name = "BetterDiscordBridge", version = BetterDiscordBridge.VERSION, authors = {"Bennyboy1695"})
+@Plugin(id = "betterdiscordbridge", name = "BetterDiscordBridge", version = BetterDiscordBridge.VERSION, authors = {"Bennyboy1695", "js6pak"})
 public final class BetterDiscordBridge {
 
 
-    static final String VERSION = "1.0.0";
+    static final String VERSION = "1.0.1";
 
     private final ProxyServer proxyServer;
     private final Logger logger;

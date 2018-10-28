@@ -1,6 +1,7 @@
 package io.github.bennyboy1695.betterdiscordbridge;
 
 import com.velocitypowered.api.proxy.ProxyServer;
+import com.velocitypowered.api.proxy.server.RegisteredServer;
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import ninja.leaping.configurate.hocon.HoconConfigurationLoader;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
@@ -19,7 +20,7 @@ public class Config {
 
     Path defaultConfig;
     File defaultConf;
-    CommentedConfigurationNode configNode;
+    public CommentedConfigurationNode configNode;
     ConfigurationLoader<CommentedConfigurationNode> configManager;
 
     public Config(Path defaultConfig, String configName, Logger logger, ProxyServer proxyServer) {
@@ -80,18 +81,31 @@ public class Config {
         if (configNode.getNode("discord", "channels", "global").isVirtual()) {
             configNode.getNode("discord", "channels", "global").setValue(0L).setComment("This is the channel id of the discord channel you would like chat to go to. This is only used if mode is set to global!");
         }
-        //for (RegisteredServer registeredServer : proxyServer.getAllServers()) {
-        //    if (configNode.getNode("discord", "channels", registeredServer.getServerInfo().getName()).isVirtual()) {
-        //        configNode.getNode("discord", "channels", registeredServer.getServerInfo().getName()).setValue(0L).setComment("This is where you put the id of the discord channel you would like to link to " + registeredServer.getServerInfo().getName() + " . This channel will only be used if mode is set to separated and if the server still exists in velocity!");
-        //    }
-        //}
+        for (RegisteredServer registeredServer : proxyServer.getAllServers()) {
+            if (configNode.getNode("discord", "channels", registeredServer.getServerInfo().getName()).isVirtual()) {
+                configNode.getNode("discord", "channels", registeredServer.getServerInfo().getName()).setValue(0L).setComment("This is where you put the id of the discord channel you would like to link to " + registeredServer.getServerInfo().getName() + " . This channel will only be used if mode is set to separated and if the server still exists in velocity!");
+            }
+        }
 
         //Formats
-        if (configNode.getNode("format", "discord", "to").isVirtual()) {
-            configNode.getNode("format", "discord", "to").setValue("`<Server>`: <Message>").setComment("This is how the chat messages will look when they go into discord! <Server> is replaced by the name of the server gotten from the Velocity config.");
+
+        // To discord from minecraft
+        if (configNode.getNode("format", "discord", "to", "style").isVirtual()) {
+            configNode.getNode("format", "discord", "to", "style").setValue("[*<Server>*] <User>: <Message>").setComment("This is how the chat messages will look when they go into discord! <Server> is replaced by the name of the server gotten from the Velocity config.");
         }
-        if (configNode.getNode("format", "discord", "from").isVirtual()) {
-            configNode.getNode("format", "discord", "from").setValue("&f[&1Discord&f] &2<User>&f:&r <Message>").setComment("This is how messages from discord will get formatted as they go ingame!");
+        if (configNode.getNode("format", "discord", "to", "translateColorCodes").isVirtual()) {
+            configNode.getNode("format", "discord", "to", "translateColorCodes").setValue(true).setComment("If true message will be translated eg. from `&oItalic&r &lBold&r &mStrike&r` to `*Italic* **Bold** ~~Strike~~`");
+        }
+        if (configNode.getNode("format", "discord", "to", "escapeDiscordFormat").isVirtual()) {
+            configNode.getNode("format", "discord", "to", "escapeDiscordFormat").setValue(true).setComment("Escape discord format (*italic*, **bold**, ~~strike~~)");
+        }
+
+        // From discord to minecraft
+        if (configNode.getNode("format", "discord", "from", "style").isVirtual()) {
+            configNode.getNode("format", "discord", "from", "style").setValue("&f[&aDiscord&f] <RankColor><User>&7#<Discriminator>&f:&r <Message>").setComment("This is how messages from discord will get formatted as they go ingame!");
+        }
+        if (configNode.getNode("format", "discord", "from", "colorPing").isVirtual()) {
+            configNode.getNode("format", "discord", "from", "colorPing").setValue(true).setComment("Color @ping");
         }
     }
 
@@ -125,12 +139,12 @@ public class Config {
         return mode;
     }
 
-    public long getChannels(String type) {
-        long id = 0L;
-        switch (type) {
-            case "global":
-               id = configNode.getNode("discord", "channels", "global").getLong();
-               break;
+    public long getChannels(String channel) {
+        long id = -1L;
+        if (channel.toLowerCase().equals("global")) {
+            id = configNode.getNode("discord", "channels", "global").getLong();
+        } else {
+            id = configNode.getNode("discord", "channels", channel).getLong();
         }
         return id;
     }
@@ -139,10 +153,10 @@ public class Config {
         String format = "";
         switch (type) {
             case "discord_to":
-                format = configNode.getNode("format", "discord", "to").getString();
+                format = configNode.getNode("format", "discord", "to", "style").getString();
                 break;
             case "discord_from":
-                format = configNode.getNode("format", "discord", "from").getString();
+                format = configNode.getNode("format", "discord", "from", "style").getString();
                 break;
         }
         return format;

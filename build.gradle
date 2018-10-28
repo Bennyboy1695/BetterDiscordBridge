@@ -68,13 +68,13 @@ shadowJar {
         include dependency("org.apache.commons:commons-collections4")
         include dependency("org.json:json")
         include dependency("net.sf.trove4j:trove4j")
-        relocate "net.dv8tion", "JDA"
-        relocate "com.neovisionaries", "dep1"
-        relocate "okhttp3", "dep2"
-        relocate "okio", "dep6"
-        relocate "org.apache.commons", "dep3"
-        relocate "org.json", "dep4"
-        relocate "net.sf.trove4j", "dep5"
+//        relocate "net.dv8tion", "JDA"
+//        relocate "com.neovisionaries", "dep1"
+//        relocate "okhttp3", "dep2"
+//        relocate "okio", "dep6"
+//        relocate "org.apache.commons", "dep3"
+//        relocate "org.json", "dep4"
+//        relocate "net.sf.trove4j", "dep5"
     }
 
 }
