@@ -96,8 +96,8 @@ public class Config {
         }
         for (RegisteredServer registeredServer : proxyServer.getAllServers()) {
             String serverName = registeredServer.getServerInfo().getName();
-            if (configNode.getNode("discord", "channels", serverName).isVirtual()) {
-                configNode.getNode("discord", "channels", serverName).setValue(0L).setComment("This is where you put the id of the discord channel you would like to link to " + registeredServer.getServerInfo().getName() + " . This channel will only be used if mode is set to separated and if the server still exists in velocity!");
+            if (configNode.getNode("discord", "channels", serverName, "id").isVirtual()) {
+                configNode.getNode("discord", "channels", serverName, "id").setValue(0L).setComment("This is where you put the id of the discord channel you would like to link to " + registeredServer.getServerInfo().getName() + " . This channel will only be used if mode is set to separated and if the server still exists in velocity!");
             }
             String str = serverName;
             String cap = str.substring(0, 1).toUpperCase() + str.substring(1);
@@ -180,7 +180,7 @@ public class Config {
         if (channel.toLowerCase().equals("global")) {
             id = configNode.getNode("discord", "channels", "global").getLong();
         } else {
-            id = configNode.getNode("discord", "channels", channel).getLong();
+            id = configNode.getNode("discord", "channels", channel, "id").getLong();
         }
         return id;
     }
