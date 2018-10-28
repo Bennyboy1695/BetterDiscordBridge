@@ -31,7 +31,6 @@ public class CommandGameStatus implements Command {
             fullArgs = str.substring(1, str.length()-1).replace(",", "");
 
                 if (args[0].startsWith("Playing") || args[0].startsWith("playing")) {
-                instance.getLogger().info(fullArgs);
                     instance.getJDA().getPresence().setGame(Game.playing(fullArgs.replace("playing", "").replace("Playing", "")));
                     source.sendMessage(TextComponent.of("Set bots status to: " + fullArgs, TextColor.GREEN));
                     instance.getConfig().getConfigNode().getNode("discord", "info", "status").setValue(fullArgs);

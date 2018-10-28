@@ -1,5 +1,6 @@
 package io.github.bennyboy1695.betterdiscordbridge.Listeners;
 
+import com.velocitypowered.api.proxy.server.RegisteredServer;
 import io.github.bennyboy1695.betterdiscordbridge.BetterDiscordBridge;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
@@ -16,9 +17,17 @@ public class DiscordListener extends ListenerAdapter {
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
         if (event.getAuthor().isBot()) return;
-
-        if (event.getChannel().getIdLong() == instance.getConfig().getChannels("global")) {
-            instance.getProxyServer().broadcast(ComponentSerializers.LEGACY.deserialize(instance.getConfig().getFormats("discord_from").replace("<User>", event.getMember().getEffectiveName()).replace("<Message>", event.getMessage().getContentDisplay()), '&'));
+        if (!instance.getConfig().getChatMode().equals("separated")) {
+            if (event.getChannel().getIdLong() == instance.getConfig().getChannels("global")) {
+                instance.getProxyServer().broadcast(ComponentSerializers.LEGACY.deserialize(instance.getConfig().getFormats("discord_from").replace("<User>", event.getMember().getEffectiveName()).replace("<Message>", event.getMessage().getContentDisplay()), '&'));
+            }
+        } else {
+            for (RegisteredServer server : instance.getProxyServer().getAllServers()) {
+                if (event.getChannel().getIdLong() == instance.getConfig().getChannels(server.getServerInfo().getName())) {
+                    //TODO: solo server broadcasts can't be done yet :(
+                    instance.getProxyServer().broadcast(ComponentSerializers.LEGACY.deserialize(instance.getConfig().getFormats("discord_from").replace("<User>", event.getMember().getEffectiveName()).replace("<Message>", event.getMessage().getContentDisplay()), '&'));
+                }
+            }
         }
     }
 }

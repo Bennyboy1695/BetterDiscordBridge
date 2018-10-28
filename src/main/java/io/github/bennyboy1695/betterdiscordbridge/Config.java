@@ -86,14 +86,23 @@ public class Config {
         if (configNode.getNode("discord", "info", "useConfigStatus").isVirtual()) {
             configNode.getNode("discord", "info", "useConfigStatus").setValue(true).setComment("If this is set to true, everytime the Velocity server starts the bots status will be set from whats written in the config!");
         }
+        if (configNode.getNode("discord", "info", "useConfigServerNames").isVirtual()) {
+            configNode.getNode("discord", "info", "useConfigServerNames").setValue(true).setComment("If this is set to true then <Server> will be replaced with values in this config!");
+        }
 
         //Channels
         if (configNode.getNode("discord", "channels", "global").isVirtual()) {
             configNode.getNode("discord", "channels", "global").setValue(0L).setComment("This is the channel id of the discord channel you would like chat to go to. This is only used if mode is set to global!");
         }
         for (RegisteredServer registeredServer : proxyServer.getAllServers()) {
-            if (configNode.getNode("discord", "channels", registeredServer.getServerInfo().getName()).isVirtual()) {
-                configNode.getNode("discord", "channels", registeredServer.getServerInfo().getName()).setValue(0L).setComment("This is where you put the id of the discord channel you would like to link to " + registeredServer.getServerInfo().getName() + " . This channel will only be used if mode is set to separated and if the server still exists in velocity!");
+            String serverName = registeredServer.getServerInfo().getName();
+            if (configNode.getNode("discord", "channels", serverName).isVirtual()) {
+                configNode.getNode("discord", "channels", serverName).setValue(0L).setComment("This is where you put the id of the discord channel you would like to link to " + registeredServer.getServerInfo().getName() + " . This channel will only be used if mode is set to separated and if the server still exists in velocity!");
+            }
+            String str = serverName;
+            String cap = str.substring(0, 1).toUpperCase() + str.substring(1);
+            if (configNode.getNode("discord", "channels", serverName, "serverName").isVirtual()) {
+                configNode.getNode("discord", "channels", serverName, "serverName").setValue(cap).setComment("This is the name you want to replace <Server> in discord if useConfigServerNames is set to true!");
             }
         }
 
@@ -146,6 +155,16 @@ public class Config {
         return status;
     }
 
+    public Boolean getUseConfigServerNames() {
+        Boolean serverNames = null;
+        try {
+            serverNames = configNode.getNode("discord", "info", "useConfigServerNames").getBoolean();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        return serverNames;
+    }
+
     public Boolean getUseStatus() {
         Boolean status = null;
         try {
@@ -177,5 +196,15 @@ public class Config {
                 break;
         }
         return format;
+    }
+
+    public String getServerNames(String serverName) {
+        String name = "";
+        try {
+            name = configNode.getNode("discord", "channels", serverName, "serverName").getString();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        return name;
     }
 }
