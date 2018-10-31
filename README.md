@@ -1,6 +1,6 @@
 # BetterDiscordBridge
 
-This plugin enables you to link your Velocity server to discord! It provides/ will provide a lot of configurable and customizable op0tions to allow you to configure the plugin to be exactly how you want it!
+This plugin enables you to link your Velocity server to discord! It provides/ will provide a lot of configurable and customizable options to allow you to configure the plugin to be exactly how you want it!
 
 ## Setup
 
