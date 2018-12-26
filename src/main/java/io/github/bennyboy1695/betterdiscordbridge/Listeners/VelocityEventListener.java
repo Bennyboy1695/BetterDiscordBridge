@@ -21,9 +21,9 @@ public class VelocityEventListener {
             serverName = event.getPlayer().getCurrentServer().get().getServerInfo().getName();
         }
         if (!instance.getConfig().getChatMode().equals("separated")) {
-            instance.getDiscordMethods().sendMessage(instance.getConfig().getChannels("global"), instance.getConfig().getFormats("discord_to").replaceAll("<Server>", serverName).replaceAll("<User>", event.getPlayer().getName()).replaceAll("<Message>", event.getMessage()));
+            instance.getDiscordMethods().sendMessage(instance.getConfig().getChannels("global"), instance.getConfig().getFormats("discord_to").replaceAll("<Server>", serverName).replaceAll("<User>", event.getPlayer().getUsername()).replaceAll("<Message>", event.getMessage()));
         } else {
-           instance.getDiscordMethods().sendMessage(instance.getConfig().getChannels(serverName), instance.getConfig().getFormats("discord_to").replaceAll("<Server>", serverName).replaceAll("<User>", event.getPlayer().getName()).replaceAll("<Message>", event.getMessage()));
+           instance.getDiscordMethods().sendMessage(instance.getConfig().getChannels(serverName), instance.getConfig().getFormats("discord_to").replaceAll("<Server>", serverName).replaceAll("<User>", event.getPlayer().getUsername()).replaceAll("<Message>", event.getMessage()));
         }
     }
 }
