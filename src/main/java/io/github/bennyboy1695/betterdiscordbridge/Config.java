@@ -108,7 +108,7 @@ public class Config {
 
         //Formats
         if (configNode.getNode("format", "discord", "to").isVirtual()) {
-            configNode.getNode("format", "discord", "to").setValue("`<Server>`: <Message>").setComment("This is how the chat messages will look when they go into discord! <Server> is replaced by the name of the server gotten from the Velocity config.");
+            configNode.getNode("format", "discord", "to").setValue("`<Server>` <User>: <Message>").setComment("This is how the chat messages will look when they go into discord! <Server> is replaced by the name of the server gotten from the Velocity config.");
         }
         if (configNode.getNode("format", "discord", "from").isVirtual()) {
             configNode.getNode("format", "discord", "from").setValue("&f[&1Discord&f] &2<User>&f:&r <Message>").setComment("This is how messages from discord will get formatted as they go ingame!");
