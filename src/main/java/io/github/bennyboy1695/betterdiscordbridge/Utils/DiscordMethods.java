@@ -1,6 +1,6 @@
-package io.github.bennyboy1695.Utils;
+package io.github.bennyboy1695.betterdiscordbridge.Utils;
 
-import io.github.bennyboy1695.BetterDiscordBridge;
+import io.github.bennyboy1695.betterdiscordbridge.BetterDiscordBridge;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.TextChannel;

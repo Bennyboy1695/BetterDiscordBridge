@@ -18,12 +18,15 @@ buildscript {
     }
 }
 
+
 apply plugin: 'java'
 apply plugin: "org.jetbrains.kotlin.jvm"
 apply plugin: 'com.github.johnrengelman.shadow'
 
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
+
 
 repositories {
     mavenLocal()
@@ -62,9 +65,6 @@ dependencies {
     implementation 'com.vdurmont:emoji-java:5.1.1'
     implementation 'net.dv8tion:JDA:4.2.0_168'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.4.0'
-
-
-
 
 }
 

@@ -1,4 +1,4 @@
-package io.github.bennyboy1695;
+package io.github.bennyboy1695.betterdiscordbridge;
 
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.server.RegisteredServer;

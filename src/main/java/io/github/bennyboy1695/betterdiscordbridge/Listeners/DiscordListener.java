@@ -1,9 +1,9 @@
-package io.github.bennyboy1695.listeners;
+package io.github.bennyboy1695.betterdiscordbridge.Listeners;
 
 import com.google.inject.Inject;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
-import io.github.bennyboy1695.BetterDiscordBridge;
+import io.github.bennyboy1695.betterdiscordbridge.BetterDiscordBridge;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;

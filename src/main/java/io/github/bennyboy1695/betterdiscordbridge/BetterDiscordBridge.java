@@ -1,4 +1,4 @@
-package io.github.bennyboy1695;
+package io.github.bennyboy1695.betterdiscordbridge;
 
 
 import com.google.inject.Inject;
@@ -7,10 +7,10 @@ import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
-import io.github.bennyboy1695.Commands.CommandGameStatus;
-import io.github.bennyboy1695.Utils.DiscordMethods;
-import io.github.bennyboy1695.listeners.DiscordListener;
-import io.github.bennyboy1695.listeners.VelocityEventListener;
+import io.github.bennyboy1695.betterdiscordbridge.Commands.CommandGameStatus;
+import io.github.bennyboy1695.betterdiscordbridge.Listeners.DiscordListener;
+import io.github.bennyboy1695.betterdiscordbridge.Listeners.VelocityEventListener;
+import io.github.bennyboy1695.betterdiscordbridge.Utils.DiscordMethods;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -30,6 +30,7 @@ import java.util.EnumSet;
  The id, Name, dependencies required if any, the version of the plugin, description, and author(s)
  To credit the Origin Author and Contributors, I have changed the Author = to "Bennyboy1695 & Contributors"
  */
+
 
 @Plugin(id = "betterdiscordbridge", name = "BetterDiscordBridge", version = BetterDiscordBridge.VERSION, description = "A Velocity Proxy Discord Bridge", authors = {"Bennyboy1695 & Contributors"})
 public final class BetterDiscordBridge {

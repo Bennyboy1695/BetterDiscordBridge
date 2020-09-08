@@ -1,9 +1,9 @@
-package io.github.bennyboy1695.Commands;
+package io.github.bennyboy1695.betterdiscordbridge.Commands;
 
 
 import com.velocitypowered.api.command.Command;
 import com.velocitypowered.api.command.CommandSource;
-import io.github.bennyboy1695.BetterDiscordBridge;
+import io.github.bennyboy1695.betterdiscordbridge.BetterDiscordBridge;
 import net.dv8tion.jda.api.entities.Activity;
 import net.kyori.text.TextComponent;
 import net.kyori.text.format.TextColor;
