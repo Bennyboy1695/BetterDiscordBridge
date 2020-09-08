@@ -1,34 +1,48 @@
-# BetterDiscordBridge
+<h1 align="center">Viscord</h1>
 
-This plugin enables you to link your Velocity Network to Discord! 
-The intent is to provide a lot of configurable and customizable options to allow you the format you want!
+A Velocity proxy discord bridge plugin like none other.
+
+*Plugin name has yet to be approved by the owner of this project.*
+
+## About Viscord
+
+Viscord is a Minecraft <--> Discord bridge and vis versa, built on the velocity api 1.1.0.
+
+On top of being just another Mc Discord bridge, Viscord was designed with multiple servers in mind.
+
+Here's how:
+- All velocity connected servers can send messages to one Discord channel. {Global}
+- All velocity connected servers can send messages to individual channels per server. {Separate}
+
+Instead of hassling with putting a discord plugin in each server with there own bot accounts,
+viscord is only one bot with high potential to grow and become something great. 
+
+You've most likely seen a lot of big Minecraft Networks that have this feature and we plan
+to give that feature back to the community.
 
 
-## Features
-- Send all messages from the servers connected to velocity to one Discord channel.
-- Have all servers connected to your Velocity to send to there own Discord channel.
-- Limited placeholder values / Currently just enough to get the project kicking.
+## Future plans & Ideas
+-[] LuckPerms support for Groups, Prefix, Suffix.
+-[x] Update to Velocity-Api 1.1.0
+-[] ReCode Bot Status Command.
+-[x] Give a spiffy new name to the plugin
+-[] Get the new name approved by Bennyboy1695
+-[x] Update plugin libs & dependencies
+-[] Add more commenting to assist with always understanding the code
+-[] Think of new ways to make the plugin even better
+-[] Update & Add more detailed guides to the wiki
 
-# TODO
-- Add more placeholder values that can respect Nicks, prefixes, suffixes.
-- Fix seralization error with sending msg's to the server.
-- Update the name of plugin.
-- Combined the plugins features with https://github.com/AnvilPowered/Catalyst
+## Setup Guide
 
-Combining this plugin with AnvilPowered/Catalyst is to continue the "All in one package" that Catalyst offers.
-I'll still want to keep this plugin as a standalone for those who would like it that way.
+Some guidance on how to get the plugin all set up and running can be found over on the [wiki](https://github.com/Bennyboy1695/BetterDiscordBridge/wiki/Setup)
 
-## Setup
-
-We have a setup guide on here: https://github.com/Bennyboy1695/BetterDiscordBridge/wiki/Setup
-That will help you do the basic steps needed to get the plugin up and running.
 
 ## Pull Requests
 This is an open source project!
 Pull requests are always welcomed no matter how big or small!
 
-## NOTICE
-Please keep in mind this is not my project and that I am only using this project to get better with developing with Java for Minecraft.
-I choose this plugin because It is something that I think everyone running a proxy should have and this project has more potential then what most might see.
-I've seen many big name minecraft networks with this kind of feature to find out they had a developer on there end leaving us normal people with out any of the fun stuff.
-It's time we break that gap and give that fun stuff to the community.
+
+
+## Forking
+
+Forks are allowed as long as you don't release your modified version of the plugin without asking me or even acknowledging me beforehand!

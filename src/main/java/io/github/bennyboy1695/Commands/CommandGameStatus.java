@@ -1,45 +1,73 @@
-package io.github.bennyboy1695.betterdiscordbridge.Commands;
+package io.github.bennyboy1695.Commands;
+
+
 
 import com.velocitypowered.api.command.Command;
 import com.velocitypowered.api.command.CommandSource;
-import io.github.bennyboy1695.betterdiscordbridge.BetterDiscordBridge;
-import net.dv8tion.jda.core.entities.Game;
+import io.github.bennyboy1695.BetterDiscordBridge;
+import net.dv8tion.jda.api.entities.Activity;
 import net.kyori.text.TextComponent;
 import net.kyori.text.format.TextColor;
 import org.checkerframework.checker.nullness.qual.NonNull;
-
 import java.util.Arrays;
+
+
 
 public class CommandGameStatus implements Command {
 
-    private BetterDiscordBridge instance;
 
-    public CommandGameStatus(BetterDiscordBridge instance) {
-        this.instance = instance;
+    /*
+     This used to be "BetterDiscordBridge instance"
+     But we want things to be as clean and understanding as possible.
+     So "instance" has been changed to "bridge" for the whole plugin.
+     */
+    private final BetterDiscordBridge bridge;
+
+
+
+    public CommandGameStatus(BetterDiscordBridge bridge) {
+        this.bridge = bridge;
     }
-    @Override
-    public void execute(@NonNull CommandSource source, String[] args) {
+
+
+    /*
+    This is very deprecated and will need to be rebuilt,
+    However this currently works and that is all that matter.
+    Refer to Kyori Adventure and also brig commands when re working this.
+
+    This is the GameStatus command.
+    This allows you to change the bots status seen in discord.
+
+    The deprecations are "execute" and "sendMessage" method.
+     */
+    public void execute(CommandSource source, @NonNull String[] args) {
+
+
         if (source.hasPermission("betterdiscordbridge.command.gamestatus")) {
             if (args.length <= 1) {
                 source.sendMessage(TextComponent.of("Invalid usage!").color(TextColor.RED));
                 source.sendMessage(TextComponent.of("Usage: /gamestatus <playing|listening|watching> a Velocity server!").color(TextColor.RED));
                 return;
             }
-            //Easier way to get the args :P//
+
+
+            //Easier way to get the args :P
             String fullArgs;
             String str = Arrays.toString(args);
             fullArgs = str.substring(1, str.length()-1).replace(",", "");
 
+
+
                 if (args[0].startsWith("Playing") || args[0].startsWith("playing")) {
-                    instance.getJDA().getPresence().setGame(Game.playing(fullArgs.replace("playing", "").replace("Playing", "")));
+                    bridge.getJDA().getPresence().setActivity(Activity.playing(fullArgs.replace("playing", "").replace("Playing", "")));
                     source.sendMessage(TextComponent.of("Set bots status to: " + fullArgs, TextColor.GREEN));
-                    instance.getConfig().getConfigNode().getNode("discord", "info", "status").setValue(fullArgs);
-                    instance.getConfig().saveConfig();
+                    bridge.getConfig().getConfigNode().getNode("discord", "info", "status").setValue(fullArgs);
+                    bridge.getConfig().saveConfig();
                 } else if (args[0].startsWith("Watching") || args[0].startsWith("watching")) {
-                    instance.getJDA().getPresence().setGame(Game.watching(fullArgs.replace("watching", "").replace("Watching", "")));
+                    bridge.getJDA().getPresence().setActivity(Activity.watching(fullArgs.replace("watching", "").replace("Watching", "")));
                     source.sendMessage(TextComponent.of("Set bots status to: " + fullArgs, TextColor.GREEN));
                 } else if (args[0].startsWith("Listening") || args[0].startsWith("listening")) {
-                    instance.getJDA().getPresence().setGame(Game.listening(fullArgs.replace("listening", "").replace("Listening", "")));
+                    bridge.getJDA().getPresence().setActivity(Activity.listening(fullArgs.replace("listening", "").replace("Listening", "")));
                     source.sendMessage(TextComponent.of("Set bots status to: " + fullArgs, TextColor.GREEN));
                 } else {
                     source.sendMessage(TextComponent.of("Invalid usage!").color(TextColor.RED));
@@ -48,3 +76,7 @@ public class CommandGameStatus implements Command {
         }
     }
 }
+
+
+
+

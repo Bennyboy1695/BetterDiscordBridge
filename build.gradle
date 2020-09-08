@@ -1,24 +1,32 @@
+
 buildscript {
     repositories {
-        jcenter()
+        mavenLocal()
         mavenCentral()
+        jcenter()
         maven {
             url 'https://jitpack.io'
+        }
+        maven {
+            url 'https://plugins.gradle.org/m2/'
         }
     }
 
     dependencies {
-        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.2'
+        classpath 'com.github.jengelman.gradle.plugins:shadow:5.2.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.0"
     }
 }
 
 apply plugin: 'java'
+apply plugin: "org.jetbrains.kotlin.jvm"
 apply plugin: 'com.github.johnrengelman.shadow'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
+    mavenLocal()
     mavenCentral()
     jcenter()
     maven {
@@ -37,46 +45,76 @@ repositories {
 
 dependencies {
     //testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile 'com.velocitypowered:velocity-api:1.0-SNAPSHOT'
-    compile "org.spongepowered:configurate-hocon:3.6"
+    implementation 'com.velocitypowered:velocity-api:1.1.0-SNAPSHOT'
+    implementation "org.spongepowered:configurate-hocon:3.7.1"
+    annotationProcessor 'com.velocitypowered:velocity-api:1.1.0-SNAPSHOT'
 
     //Jda
-    compile 'org.apache.commons:commons-collections4:4.1'
-    compile 'org.json:json:20160810'
-    compile 'net.sf.trove4j:trove4j:3.0.3'
-    compile 'com.squareup.okio:okio:1.15.0'
-    compile 'com.neovisionaries:nv-websocket-client:2.4'
-    compile 'com.squareup.okhttp3:okhttp:3.8.1'
-    compile ('net.dv8tion:JDA:3.7.1_395') {
-        exclude module: 'opus-java'
-    }
+    implementation 'org.apache.commons:commons-collections4:4.4'
+    implementation 'org.json:json:20200518'
+    implementation 'net.sf.trove4j:trove4j:3.0.3'
+    implementation 'com.squareup.okio:okio:2.8.0'
+    implementation 'com.neovisionaries:nv-websocket-client:2.10'
+    implementation 'com.squareup.okhttp3:okhttp:4.8.1'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.11.2'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.11.2'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.11.2'
+    implementation 'com.vdurmont:emoji-java:5.1.1'
+    implementation 'net.dv8tion:JDA:4.2.0_168'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.4.0'
+
+
+
+
 }
+
 
 shadowJar {
-    baseName = 'BetterDiscordBridge'
-    classifier = null
-    version = '1.1.2'
-    dependencies {
-        include dependency("org.spongepowered:configurate-hocon")
-        include dependency("org.spongepowered:configurate-core")
-        include dependency("com.typesafe:config")
-        include dependency("net.dv8tion:JDA")
-        include dependency("com.vdurmont:emoji-java")
-        include dependency("com.neovisionaries:nv-websocket-client")
-        include dependency("com.squareup.okhttp3:okhttp")
-        include dependency("com.squareup.okio:okio")
-        include dependency("org.apache.commons:commons-collections4")
-        include dependency("org.json:json")
-        include dependency("net.sf.trove4j:trove4j")
-        relocate "net.dv8tion", "JDA"
-        relocate "com.neovisionaries", "dep1"
-        relocate "okhttp3", "dep2"
-        relocate "okio", "dep6"
-        relocate "org.apache.commons", "dep3"
-        relocate "org.json", "dep4"
-        relocate "net.sf.trove4j", "dep5"
-    }
+    // Output to build/libs/shadow.jar
+    String jarName = "${project.name}-${pluginVersion}.jar"
+    println "Building: " + jarName
+    archiveFileName = jarName
 
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    dependencies {
+        include dependency('org.spongepowered:configurate-hocon')
+        include dependency('org.spongepowered:configurate-core')
+        include dependency('com.typesafe:config')
+        include dependency('net.kyori:adventure-api')
+        include dependency('net.kyori:text-api')
+        include dependency('net.kyori:adventure-text-serializer-legacy')
+        include dependency('net.kyori:examination-api')
+        include dependency('net.kyori:text-serializer-legacy')
+        include dependency('org.apache.commons:commons-collections4')
+        include dependency('com.vdurmont:emoji-java')
+        include dependency('net.dv8tion:JDA')
+        include dependency('org.json:json')
+        include dependency('com.neovisionaries:nv-websocket-client')
+        include dependency('com.squareup.okhttp3:okhttp')
+        include dependency('com.squareup.okio:okio')
+        include dependency('net.sf.trove4j:trove4j')
+        include dependency('com.fasterxml.jackson.core:jackson-core:2.11.2')
+        include dependency('com.fasterxml.jackson.core:jackson-annotations:2.11.2')
+        include dependency('com.fasterxml.jackson.core:jackson-databind:2.11.2')
+        include dependency('org.jetbrains.kotlin:kotlin-stdlib:1.4.0')
+
+        relocate('org.apache', 'io.github.bennyboy1695.org.apache') {
+            exclude 'org/apache/logging/**'
+        }
+        relocate "okhttp3", "io.github.bennyboy1695.okhttp3"
+        relocate "jackson-core", "io.github.bennyboy1695.jackson-core"
+        relocate "jackson-annotations", "io.github.bennyboy1695.jackson-annotations"
+        relocate "jackson-databind", "io.github.bennyboy1695.jackson-databind"
+        relocate "okio", "io.github.bennyboy1695.okio"
+        relocate "org.json", "io.github.bennyboy1695.org.json"
+        relocate "gnu.trove", "io.github.bennyboy1695.gnu.trove"
+        relocate 'com.squareup', 'io.github.bennyboy1695.com.squareup'
+
+    }
 }
 
 
+
+compileJava.options.encoding = 'UTF-8'
