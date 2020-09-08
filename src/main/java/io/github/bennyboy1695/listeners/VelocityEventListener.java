@@ -5,6 +5,8 @@ import com.velocitypowered.api.event.player.PlayerChatEvent;
 import io.github.bennyboy1695.BetterDiscordBridge;
 import io.github.bennyboy1695.Utils.DiscordMethods;
 
+import java.util.regex.Matcher;
+
 public class VelocityEventListener {
     //h//
     private final BetterDiscordBridge bridge;
@@ -23,7 +25,7 @@ public class VelocityEventListener {
         }
 
         String message = bridge.getConfig().getFormats("discord_to")
-                .replaceAll("<Server>", serverName)
+                .replaceAll("<Server>", Matcher.quoteReplacement(serverName))
                 .replaceAll("<User>", event.getPlayer().getUsername())
                 .replaceAll("<Message>", event.getMessage());
 
