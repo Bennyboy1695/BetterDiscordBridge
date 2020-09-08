@@ -22,15 +22,16 @@ to give that feature back to the community.
 
 
 ## Future plans & Ideas
--[] LuckPerms support for Groups, Prefix, Suffix.
--[x] Update to Velocity-Api 1.1.0
--[] ReCode Bot Status Command.
--[x] Give a spiffy new name to the plugin
--[] Get the new name approved by Bennyboy1695
--[x] Update plugin libs & dependencies
--[] Add more commenting to assist with always understanding the code
--[] Think of new ways to make the plugin even better
--[] Update & Add more detailed guides to the wiki
+
+- LuckPerms support for Groups, Prefix, Suffix.
+- [x] Update to Velocity-Api 1.1.0
+- ReCode Bot Status Command.
+- [x] Give a spiffy new name to the plugin
+- Get the new name approved by Bennyboy1695
+- [x] Update plugin libs & dependencies
+- Add more commenting to assist with always understanding the code
+- Think of new ways to make the plugin even better
+- Update & Add more detailed guides to the wiki
 
 ## Setup Guide
 
