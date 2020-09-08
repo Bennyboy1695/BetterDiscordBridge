@@ -39,7 +39,7 @@ Some guidance on how to get the plugin all set up and running can be found over 
 
 ## Pull Requests
 This is an open source project!
-Pull requests are always welcomed no matter how big or small!
+Pull requests are always welcomed no matter how big or small.
 
 
 

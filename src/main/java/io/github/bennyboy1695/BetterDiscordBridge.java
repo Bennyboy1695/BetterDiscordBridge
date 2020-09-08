@@ -17,10 +17,11 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
+import org.slf4j.Logger;
+
 import javax.security.auth.login.LoginException;
 import java.nio.file.Path;
 import java.util.EnumSet;
-import org.slf4j.Logger;
 
 
 
@@ -43,7 +44,7 @@ public final class BetterDiscordBridge {
     private final Logger logger;
     private final Path configDirectory;
 
-    // Changing to lowercase config when calling to the Config class.
+    // Changing to lowercase config when calling to the Config class.//
     private Config config;
 
     // JDA(Java Discord Api), to lowercase jda.

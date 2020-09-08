@@ -1,7 +1,6 @@
 package io.github.bennyboy1695.Commands;
 
 
-
 import com.velocitypowered.api.command.Command;
 import com.velocitypowered.api.command.CommandSource;
 import io.github.bennyboy1695.BetterDiscordBridge;
@@ -9,6 +8,7 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.kyori.text.TextComponent;
 import net.kyori.text.format.TextColor;
 import org.checkerframework.checker.nullness.qual.NonNull;
+
 import java.util.Arrays;
 
 
@@ -33,7 +33,7 @@ public class CommandGameStatus implements Command {
     /*
     This is very deprecated and will need to be rebuilt,
     However this currently works and that is all that matter.
-    Refer to Kyori Adventure and also brig commands when re working this.
+    Refer to Kyori.Adventure and also brig commands when re working this.
 
     This is the GameStatus command.
     This allows you to change the bots status seen in discord.

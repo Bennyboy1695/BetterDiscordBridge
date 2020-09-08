@@ -106,7 +106,7 @@ public class Config {
             }
         }
 
-        //Formats
+        //Formats//
         if (configNode.getNode("format", "discord", "to").isVirtual()) {
             configNode.getNode("format", "discord", "to").setValue("`<Server>` <User>: <Message>").setComment("This is how the chat messages will look when they go into discord! <Server> is replaced by the name of the server gotten from the Velocity config.");
         }

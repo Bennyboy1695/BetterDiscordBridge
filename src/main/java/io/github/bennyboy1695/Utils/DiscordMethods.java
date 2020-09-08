@@ -2,7 +2,9 @@ package io.github.bennyboy1695.Utils;
 
 import io.github.bennyboy1695.BetterDiscordBridge;
 import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.TextChannel;
+
 import java.util.concurrent.TimeUnit;
 
 
@@ -13,7 +15,9 @@ public class DiscordMethods {
     public DiscordMethods(BetterDiscordBridge bridge, long guildID) {
         this.bridge = bridge;
     }
-    /* Discord methods!! */
+    /*
+    Discord methods!!
+    */
 
     public static void sendMessage(JDA jda , long channelID, Object message) {
         TextChannel textChannel = jda.getTextChannelById(channelID);
