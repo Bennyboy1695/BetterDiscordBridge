@@ -3,27 +3,36 @@ package io.github.bennyboy1695.betterdiscordbridge.Listeners;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.PlayerChatEvent;
 import io.github.bennyboy1695.betterdiscordbridge.BetterDiscordBridge;
+import io.github.bennyboy1695.betterdiscordbridge.Utils.DiscordMethods;
+
+import java.util.regex.Matcher;
 
 public class VelocityEventListener {
+    //h//
+    private final BetterDiscordBridge bridge;
 
-    private BetterDiscordBridge instance;
-
-    public VelocityEventListener(BetterDiscordBridge instance) {
-        this.instance = instance;
+    public VelocityEventListener(BetterDiscordBridge bridge) {
+        this.bridge = bridge;
     }
 
     @Subscribe
     public void onChat(PlayerChatEvent event) {
-        String serverName = "";
-        if (!instance.getConfig().getUseConfigServerNames()) {
-            serverName = instance.getConfig().getServerNames(event.getPlayer().getCurrentServer().get().getServerInfo().getName());
+        String serverName;
+        if (!bridge.getConfig().getUseConfigServerNames()) {
+            serverName = bridge.getConfig().getServerNames(event.getPlayer().getCurrentServer().get().getServerInfo().getName());
         } else {
             serverName = event.getPlayer().getCurrentServer().get().getServerInfo().getName();
         }
-        if (!instance.getConfig().getChatMode().equals("separated")) {
-            instance.getDiscordMethods().sendMessage(instance.getConfig().getChannels("global"), instance.getConfig().getFormats("discord_to").replaceAll("<Server>", serverName).replaceAll("<User>", event.getPlayer().getUsername()).replaceAll("<Message>", event.getMessage()));
+
+        String message = bridge.getConfig().getFormats("discord_to")
+                .replaceAll("<Server>", Matcher.quoteReplacement(serverName))
+                .replaceAll("<User>", event.getPlayer().getUsername())
+                .replaceAll("<Message>", event.getMessage());
+
+        if (!bridge.getConfig().getChatMode().equals("separated")) {
+            DiscordMethods.sendMessage(bridge.getJDA(), bridge.getConfig().getChannels("global"), message);
         } else {
-           instance.getDiscordMethods().sendMessage(instance.getConfig().getChannels(serverName), instance.getConfig().getFormats("discord_to").replaceAll("<Server>", serverName).replaceAll("<User>", event.getPlayer().getUsername()).replaceAll("<Message>", event.getMessage()));
+           DiscordMethods.sendMessage(bridge.getJDA(), bridge.getConfig().getChannels(serverName), message);
         }
     }
 }

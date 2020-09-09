@@ -5,28 +5,28 @@ import com.velocitypowered.api.proxy.server.RegisteredServer;
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import ninja.leaping.configurate.hocon.HoconConfigurationLoader;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
+import org.slf4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.logging.Logger;
 
 public class Config {
 
     private File defaultCfg;
-    private Logger logger;
+    private final Logger logger;
     private Path path;
-    private ProxyServer proxyServer;
+    private final ProxyServer server;
 
     Path defaultConfig;
     File defaultConf;
     CommentedConfigurationNode configNode;
     ConfigurationLoader<CommentedConfigurationNode> configManager;
 
-    public Config(Path defaultConfig, String configName, Logger logger, ProxyServer proxyServer) {
+    public Config(Path defaultConfig, String configName, Logger logger, ProxyServer server) {
         this.defaultConfig = defaultConfig;
         this.logger = logger;
-        this.proxyServer = proxyServer;
+        this.server = server;
 
         if (!defaultConfig.toFile().exists()) {
             defaultConfig.toFile().mkdir();
@@ -94,7 +94,7 @@ public class Config {
         if (configNode.getNode("discord", "channels", "global").isVirtual()) {
             configNode.getNode("discord", "channels", "global").setValue(0L).setComment("This is the channel id of the discord channel you would like chat to go to. This is only used if mode is set to global!");
         }
-        for (RegisteredServer registeredServer : proxyServer.getAllServers()) {
+        for (RegisteredServer registeredServer : server.getAllServers()) {
             String serverName = registeredServer.getServerInfo().getName();
             if (configNode.getNode("discord", "channels", serverName, "id").isVirtual()) {
                 configNode.getNode("discord", "channels", serverName, "id").setValue(0L).setComment("This is where you put the id of the discord channel you would like to link to " + registeredServer.getServerInfo().getName() + " . This channel will only be used if mode is set to separated and if the server still exists in velocity!");
@@ -106,7 +106,7 @@ public class Config {
             }
         }
 
-        //Formats
+        //Formats//
         if (configNode.getNode("format", "discord", "to").isVirtual()) {
             configNode.getNode("format", "discord", "to").setValue("`<Server>` <User>: <Message>").setComment("This is how the chat messages will look when they go into discord! <Server> is replaced by the name of the server gotten from the Velocity config.");
         }
