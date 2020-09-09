@@ -2,8 +2,6 @@
 
 A Velocity proxy discord bridge plugin like none other.
 
-*Plugin name has yet to be approved by the owner of this project.*
-
 ## About BetterDiscordBridge
 
 BetterDiscordBridge is a Minecraft <--> Discord bridge and vis versa, built on the velocity api 1.1.0.
