@@ -1,9 +1,9 @@
-package io.github.bennyboy1695.betterdiscordbridge.Listeners;
+package io.github.bennyboy1695.betterdiscordbridge.listeners;
 
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.PlayerChatEvent;
 import io.github.bennyboy1695.betterdiscordbridge.BetterDiscordBridge;
-import io.github.bennyboy1695.betterdiscordbridge.Utils.DiscordMethods;
+import io.github.bennyboy1695.betterdiscordbridge.utils.DiscordMethods;
 
 import java.util.regex.Matcher;
 

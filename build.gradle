@@ -1,4 +1,3 @@
-
 buildscript {
     repositories {
         mavenLocal()
@@ -18,15 +17,12 @@ buildscript {
     }
 }
 
-
 apply plugin: 'java'
 apply plugin: "org.jetbrains.kotlin.jvm"
 apply plugin: 'com.github.johnrengelman.shadow'
 
-
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
-
 
 repositories {
     mavenLocal()
@@ -43,7 +39,6 @@ repositories {
         name = 'sponge'
         url = 'https://repo.spongepowered.org/maven'
     }
-
 }
 
 dependencies {
@@ -65,9 +60,7 @@ dependencies {
     implementation 'com.vdurmont:emoji-java:5.1.1'
     implementation 'net.dv8tion:JDA:4.2.0_168'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.4.0'
-
 }
-
 
 shadowJar {
     // Output to build/libs/shadow.jar
@@ -98,21 +91,19 @@ shadowJar {
         include dependency('com.fasterxml.jackson.core:jackson-databind:2.11.2')
         include dependency('org.jetbrains.kotlin:kotlin-stdlib:1.4.0')
 
-        relocate('org.apache', 'io.github.bennyboy1695.org.apache') {
+        relocate('org.apache', 'io.github.bennyboy1695.betterdiscordbridge.libs.org.apache') {
             exclude 'org/apache/logging/**'
         }
-        relocate "okhttp3", "io.github.bennyboy1695.okhttp3"
-        relocate "jackson-core", "io.github.bennyboy1695.jackson-core"
-        relocate "jackson-annotations", "io.github.bennyboy1695.jackson-annotations"
-        relocate "jackson-databind", "io.github.bennyboy1695.jackson-databind"
-        relocate "okio", "io.github.bennyboy1695.okio"
-        relocate "org.json", "io.github.bennyboy1695.org.json"
-        relocate "gnu.trove", "io.github.bennyboy1695.gnu.trove"
-        relocate 'com.squareup', 'io.github.bennyboy1695.com.squareup'
+        relocate "okhttp3", "io.github.bennyboy1695.betterdiscordbridge.libs.okhttp3"
+        relocate "jackson-core", "io.github.bennyboy1695.betterdiscordbridge.libs.jackson-core"
+        relocate "jackson-annotations", "io.github.bennyboy1695.betterdiscordbridge.libs.jackson-annotations"
+        relocate "jackson-databind", "io.github.bennyboy1695.betterdiscordbridge.libs.jackson-databind"
+        relocate "okio", "io.github.bennyboy1695.betterdiscordbridge.libs.okio"
+        relocate "org.json", "io.github.bennyboy1695.betterdiscordbridge.libs.org.json"
+        relocate "gnu.trove", "io.github.bennyboy1695.betterdiscordbridge.libs.gnu.trove"
+        relocate 'com.squareup', 'io.github.bennyboy1695.betterdiscordbridge.libs.com.squareup'
 
     }
 }
-
-
 
 compileJava.options.encoding = 'UTF-8'

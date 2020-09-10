@@ -1,4 +1,4 @@
-package io.github.bennyboy1695.betterdiscordbridge.Utils;
+package io.github.bennyboy1695.betterdiscordbridge.utils;
 
 import io.github.bennyboy1695.betterdiscordbridge.BetterDiscordBridge;
 import net.dv8tion.jda.api.JDA;
@@ -7,7 +7,6 @@ import net.dv8tion.jda.api.entities.TextChannel;
 
 import java.util.concurrent.TimeUnit;
 
-
 public class DiscordMethods {
 
     private final BetterDiscordBridge bridge;
@@ -15,9 +14,6 @@ public class DiscordMethods {
     public DiscordMethods(BetterDiscordBridge bridge, long guildID) {
         this.bridge = bridge;
     }
-    /*
-    Discord methods!!
-    */
 
     public static void sendMessage(JDA jda , long channelID, Object message) {
         TextChannel textChannel = jda.getTextChannelById(channelID);
@@ -32,7 +28,6 @@ public class DiscordMethods {
         }
     }
 
-
     public void doShutdown() {
         try {
             bridge.getJDA().shutdown();
@@ -40,8 +35,6 @@ public class DiscordMethods {
             e.printStackTrace();
         }
     }
-
-
 
     public static void sendAutoDeleteMessage(JDA jda, long channelID, Object message, long seconds) {
         TextChannel textChannel = jda.getTextChannelById(channelID);

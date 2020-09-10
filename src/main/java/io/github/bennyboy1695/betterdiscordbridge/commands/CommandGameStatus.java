@@ -1,5 +1,4 @@
-package io.github.bennyboy1695.betterdiscordbridge.Commands;
-
+package io.github.bennyboy1695.betterdiscordbridge.commands;
 
 import com.velocitypowered.api.command.Command;
 import com.velocitypowered.api.command.CommandSource;
@@ -11,11 +10,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Arrays;
 
-
-
 public class CommandGameStatus implements Command {
-
-
     /*
      This used to be "BetterDiscordBridge instance"
      But we want things to be as clean and understanding as possible.
@@ -23,12 +18,9 @@ public class CommandGameStatus implements Command {
      */
     private final BetterDiscordBridge bridge;
 
-
-
     public CommandGameStatus(BetterDiscordBridge bridge) {
         this.bridge = bridge;
     }
-
 
     /*
     This is very deprecated and will need to be rebuilt,
@@ -41,8 +33,6 @@ public class CommandGameStatus implements Command {
     The deprecations are "execute" and "sendMessage" method.
      */
     public void execute(CommandSource source, @NonNull String[] args) {
-
-
         if (source.hasPermission("betterdiscordbridge.command.gamestatus")) {
             if (args.length <= 1) {
                 source.sendMessage(TextComponent.of("Invalid usage!").color(TextColor.RED));
@@ -50,13 +40,10 @@ public class CommandGameStatus implements Command {
                 return;
             }
 
-
             //Easier way to get the args :P
             String fullArgs;
             String str = Arrays.toString(args);
             fullArgs = str.substring(1, str.length()-1).replace(",", "");
-
-
 
                 if (args[0].startsWith("Playing") || args[0].startsWith("playing")) {
                     bridge.getJDA().getPresence().setActivity(Activity.playing(fullArgs.replace("playing", "").replace("Playing", "")));

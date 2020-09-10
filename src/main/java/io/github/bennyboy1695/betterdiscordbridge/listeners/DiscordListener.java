@@ -1,4 +1,4 @@
-package io.github.bennyboy1695.betterdiscordbridge.Listeners;
+package io.github.bennyboy1695.betterdiscordbridge.listeners;
 
 import com.google.inject.Inject;
 import com.velocitypowered.api.proxy.Player;
@@ -36,8 +36,6 @@ public class DiscordListener extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
-
-
         User author = event.getAuthor();
         Message message = event.getMessage();
         MessageChannel channel = event.getChannel();
@@ -48,16 +46,12 @@ public class DiscordListener extends ListenerAdapter {
 
         String name = member == null ? author.getName():member.getEffectiveName();
 
-
-
         String msgformat = bridge.getConfig().getFormats("discord_from")
                 .replace("<User>", name)
                 .replace("<Message>", msg);
 
-
         @NonNull TextComponent finalmessage = TextComponent.builder(msgformat).build();
         ComponentLike compfinalmessage = finalmessage.asComponent();
-
 
         if (channel.getIdLong() == bridge.getConfig().getChannels("global")) {
             bridge.getProxyServer().sendMessage(compfinalmessage);

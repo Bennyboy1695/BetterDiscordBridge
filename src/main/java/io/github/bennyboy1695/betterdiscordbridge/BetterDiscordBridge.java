@@ -1,16 +1,15 @@
 package io.github.bennyboy1695.betterdiscordbridge;
 
-
 import com.google.inject.Inject;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
-import io.github.bennyboy1695.betterdiscordbridge.Commands.CommandGameStatus;
-import io.github.bennyboy1695.betterdiscordbridge.Listeners.DiscordListener;
-import io.github.bennyboy1695.betterdiscordbridge.Listeners.VelocityEventListener;
-import io.github.bennyboy1695.betterdiscordbridge.Utils.DiscordMethods;
+import io.github.bennyboy1695.betterdiscordbridge.commands.CommandGameStatus;
+import io.github.bennyboy1695.betterdiscordbridge.listeners.DiscordListener;
+import io.github.bennyboy1695.betterdiscordbridge.listeners.VelocityEventListener;
+import io.github.bennyboy1695.betterdiscordbridge.utils.DiscordMethods;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -23,15 +22,11 @@ import javax.security.auth.login.LoginException;
 import java.nio.file.Path;
 import java.util.EnumSet;
 
-
-
 /*
  Setting up the Plugins information.
  The id, Name, dependencies required if any, the version of the plugin, description, and author(s)
  To credit the Origin Author and Contributors, I have changed the Author = to "Bennyboy1695 & Contributors"
  */
-
-
 @Plugin(id = "betterdiscordbridge", name = "BetterDiscordBridge", version = BetterDiscordBridge.VERSION, description = "A Velocity Proxy Discord Bridge", authors = {"Bennyboy1695 & Contributors"})
 public final class BetterDiscordBridge {
 
@@ -60,7 +55,6 @@ public final class BetterDiscordBridge {
         this.logger = logger;
         this.configDirectory = configDirectory;
     }
-
 
     // When the server/proxy starts, this is the init method to start the plugin & load/register resources.
     @Subscribe
@@ -134,14 +128,14 @@ public final class BetterDiscordBridge {
     If a better method is applicable here, Suggestions are open.
 
     */
-    private void setupDiscord(String token, long GuildID, Object eventListener) {
+    private void setupDiscord(String token, long GuildID, Object... eventListeners) {
         // Java Discord API Builder
         try
         {
             // Grab token as string, enable all intents.
             jda = JDABuilder.create(token, EnumSet.allOf(GatewayIntent.class))
                     .setAutoReconnect(true)
-                    .addEventListeners(eventListener)
+                    .addEventListeners(eventListeners)
                     .setMemberCachePolicy(MemberCachePolicy.DEFAULT)
                     .setChunkingFilter(ChunkingFilter.ALL)
                     .build().awaitReady();
