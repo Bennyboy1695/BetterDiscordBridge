@@ -176,8 +176,8 @@ public class Config {
     }
 
     public long getChannels(String channel) {
-        long id = 0L;
-        if (channel.toLowerCase().equals("global")) {
+        long id;
+        if (channel.equalsIgnoreCase("global")) {
             id = configNode.getNode("discord", "channels", "global").getLong();
         } else {
             id = configNode.getNode("discord", "channels", channel, "id").getLong();
