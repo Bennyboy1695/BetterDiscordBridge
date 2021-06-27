@@ -113,6 +113,12 @@ public class Config {
         if (configNode.getNode("format", "discord", "from").isVirtual()) {
             configNode.getNode("format", "discord", "from").setValue("&f[&1Discord&f] &2<User>&f:&r <Message>").setComment("This is how messages from discord will get formatted as they go ingame!");
         }
+
+        //Join - and leave message
+        if(configNode.getNode("msgs", "joinmsg").isVirtual())
+            configNode.getNode("msgs", "joinmsg").setValue(true).setComment("Should we send a message into discord when somebody joined?");
+        if(configNode.getNode("msgs", "leavemsg").isVirtual())
+            configNode.getNode("msgs", "leavemsg").setValue(true).setComment("Should we send a message into discord when somebody left?");
     }
 
     public String getDiscordToken() {
@@ -176,8 +182,8 @@ public class Config {
     }
 
     public long getChannels(String channel) {
-        long id = 0L;
-        if (channel.toLowerCase().equals("global")) {
+        long id;
+        if (channel.equalsIgnoreCase("global")) {
             id = configNode.getNode("discord", "channels", "global").getLong();
         } else {
             id = configNode.getNode("discord", "channels", channel, "id").getLong();
@@ -206,5 +212,27 @@ public class Config {
             e.printStackTrace();
         }
         return name;
+    }
+
+    public boolean isJoinMsgActive() {
+        boolean status = false;
+        try {
+            status = configNode.getNode("msgs", "joinmsg").getBoolean();
+        }
+        catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        return status;
+    }
+
+    public boolean isLeaveMsgActive() {
+        boolean status = false;
+        try {
+            status = configNode.getNode("msgs", "leavemsg").getBoolean();
+        }
+        catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        return status;
     }
 }
