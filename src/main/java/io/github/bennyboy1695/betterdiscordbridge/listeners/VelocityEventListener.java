@@ -46,8 +46,8 @@ public class VelocityEventListener {
 
     @Subscribe
     public void onConnect(ServerConnectedEvent event) {
-        // Ignore if player switches servers
-        if(!event.getPreviousServer().equals(Optional.empty()))
+        // Ignore if player switches servers or function is deactivated
+        if(!event.getPreviousServer().equals(Optional.empty()) || !bridge.getConfig().isJoinMsgActive())
             return;
 
         // Prepare Embed
@@ -71,6 +71,10 @@ public class VelocityEventListener {
 
     @Subscribe
     public void onDisconnect(DisconnectEvent event) {
+        // Ignore if function is deactivated
+        if(!bridge.getConfig().isLeaveMsgActive())
+            return;
+
         // Prepare embed
         EmbedBuilder builder = new EmbedBuilder();
         builder.setTitle("`" + event.getPlayer().getUsername() + "` left the game");
